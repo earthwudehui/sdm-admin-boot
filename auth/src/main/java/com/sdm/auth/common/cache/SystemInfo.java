@@ -9,68 +9,74 @@ import com.sdm.auth.model.shiro.SysToken;
 
 /**
  * @Description: 应用内存
+ * @author Administrator
+ * @date 2020/11/24
  */
 public class SystemInfo {
-	
-	private static SystemInfo instance;
 
-	//token-Systoken 缓存
-	private Map<String, SysToken> sysTokenMap = new HashMap<String, SysToken>();
-	
-	//UserId-Token 缓存
-	private Map<Long, String> userIdTokenMap = new HashMap<Long, String>();
-	
-	//角色权限 缓存
-	private Map<String, List<SysMenu>> sysMenuMap = new HashMap<String, List<SysMenu>>();
+    private static SystemInfo instance;
 
- 
-	/** 系统字典项数据 */
-	//	private Map<String, List<SComCde>> sComCdeMap = new HashMap<String, List<SComCde>>();
+    /**
+     * token-Systoken 缓存
+     */
+    private Map<String, SysToken> sysTokenMap = new HashMap<String, SysToken>();
 
+    /**
+     * UserId-Token 缓存
+     */
+    private Map<Long, String> userIdTokenMap = new HashMap<Long, String>();
 
-	static {
-		instance = new SystemInfo();
-		instance.init();
-	}
+    /**
+     * 角色权限 缓存
+     */
+    private Map<String, List<SysMenu>> sysMenuMap = new HashMap<String, List<SysMenu>>();
 
-	/**
-	 * 初始化方法
-	 * @Description 一句话描述方法用法
-	 * @see 需要参考的类或方法
-	 */
-	private void init() {
-		System.out.println("init SystemInfo....... ...........................................");
-		
-		// token
-		sysTokenMap.clear();
-		userIdTokenMap.clear();
+    /** 系统字典项数据 */
+    // private Map<String, List<SComCde>> sComCdeMap = new HashMap<String, List<SComCde>>();
 
-		// 初始化角色权限信息
-		
-		System.out.println("init....... success!");
-	}
+    static {
+        instance = new SystemInfo();
+        instance.init();
+    }
 
-	/**
-	 * 警告：这个函数一般不需要手工调用 重新装入系统信息，请不要随便调用
-	 */
-	public void reLoadSystem() {
-		init();
-	}
+    /**
+     * 初始化方法
+     * 
+     * @Description 一句话描述方法用法
+     * @see 需要参考的类或方法
+     */
+    private void init() {
+        System.out.println("init SystemInfo....... ...........................................");
 
-	
-	/**
-	 * @Description 一句话描述方法用法
-	 * @see 需要参考的类或方法
-	 */
-	public static SystemInfo getSystemInfo() {
-		return instance;
-	}
+        // token
+        sysTokenMap.clear();
+        userIdTokenMap.clear();
 
-	public Map<String, SysToken> getSysTokenMap(){
-		return sysTokenMap;
-	}
-	
-	public Map<Long, String> getUserIdTokenMap(){
-		return userIdTokenMap;
-	}
+        // 初始化角色权限信息
+
+        System.out.println("init....... success!");
+    }
+
+    /**
+     * 警告：这个函数一般不需要手工调用 重新装入系统信息，请不要随便调用
+     */
+    public void reLoadSystem() {
+        init();
+    }
+
+    /**
+     * @Description 一句话描述方法用法
+     * @see 需要参考的类或方法
+     */
+    public static SystemInfo getSystemInfo() {
+        return instance;
+    }
+
+    public Map<String, SysToken> getSysTokenMap() {
+        return sysTokenMap;
+    }
+
+    public Map<Long, String> getUserIdTokenMap() {
+        return userIdTokenMap;
+    }
 }
