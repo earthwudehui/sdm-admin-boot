@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sdm.auth.dao.FzProjectAdDao" >
+  <!-- mapper基础标准: 当前表所有字段映射结果集 -->
+  <resultMap id="baseResultMap" type="com.sdm.auth.model.po.FzProjectAd" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="brand_id" property="brandId" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="BIGINT" />
+    <result column="ad_name" property="adName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="baseResultMapDTO" type="com.sdm.auth.model.dto.FzProjectAdDTO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="brand_id" property="brandId" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="BIGINT" />
+    <result column="ad_name" property="adName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR" />
+    <result column="xxmc" property="xxmc" jdbcType="VARCHAR" />
+   <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+</resultMap>
+
+  <!-- mapper基础标准: 当前表所有字段结果集 -->
+  <sql id="allBaseColumnList" >
+    id, brand_id, project_id, ad_name, status, create_by, create_date, update_by, update_date, 
+    remark, picture_url
+  </sql>
+
+	<!-- mapper基础标准: 当前表所有字段结果集 -->
+  <sql id="allBaseColumnListDTO" >
+   a.*,b.xxmc,c.project_name
+  </sql>
+
+  <!-- mapper基础标准: 当前表所有字段查询条件集 -->
+  <sql id="allBaseColumnWhereList" >
+    <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides="AND|OR" >
+      <if test="brandId != null and brandId != ''" >
+        and brand_id = #{brandId,jdbcType=VARCHAR}
+      </if>
+      <if test="projectId != null and projectId != ''" >
+        and project_id = #{projectId,jdbcType=BIGINT}
+      </if>
+      <if test="adName != null and adName != ''" >
+        and ad_name = #{adName,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != ''" >
+        and status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        and create_by = #{createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="createDate != null" >
+        and create_date = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        and update_by = #{updateBy,jdbcType=VARCHAR}
+      </if>
+      <if test="updateDate != null" >
+        and update_date = #{updateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="remark != null and remark != ''" >
+        and remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="pictureUrl != null and pictureUrl != ''" >
+        and picture_url = #{pictureUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="xxmc != null and xxmc != ''" >
+        and b.xxmc like "%" #{xxmc,jdbcType=VARCHAR}"%" 
+      </if>
+      <if test="projectName != null and projectName != ''" >
+        and c.project_name like "%" #{projectName,jdbcType=VARCHAR}"%" 
+      </if>
+    </trim>
+  </sql>
+  
+  <!-- mapper基础标准: 当前表所有字段查询条件集 -->
+  <sql id="allBaseColumnWhereListDTO" >
+    <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides="AND|OR" >
+      <if test="brandId != null and brandId != ''" >
+        and a.brand_id = #{brandId,jdbcType=VARCHAR}
+      </if>
+      <if test="projectId != null and projectId != ''" >
+        and a.project_id = #{projectId,jdbcType=BIGINT}
+      </if>
+      <if test="adName != null and adName != ''" >
+        and a.ad_name = #{adName,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != ''" >
+        and a.status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        and a.create_by = #{createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="createDate != null" >
+        and a.create_date = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        and a.update_by = #{updateBy,jdbcType=VARCHAR}
+      </if>
+      <if test="updateDate != null" >
+        and a.update_date = #{updateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="remark != null and remark != ''" >
+        and a.remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="pictureUrl != null and pictureUrl != ''" >
+        and a.picture_url = #{pictureUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="xxmc != null and xxmc != ''" >
+        and b.xxmc like "%" #{xxmc,jdbcType=VARCHAR}"%" 
+      </if>
+      <if test="projectName != null and projectName != ''" >
+        and c.project_name like "%" #{projectName,jdbcType=VARCHAR}"%" 
+      </if>
+    </trim>
+  </sql>
+
+  <!-- mapper基础标准: 通用单表主键查询 -->
+  <select id="findById" resultMap="baseResultMap" parameterType="java.lang.Long" flushCache="true" >
+    select 
+    <include refid="allBaseColumnList" />
+    from fz_project_ad
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- mapper基础标准: 通用单表全字段查询 -->
+  <select id="findAllList" resultMap="baseResultMap" parameterType="com.sdm.auth.model.po.FzProjectAd" flushCache="true" >
+    select 
+    <include refid="allBaseColumnList" />
+    from fz_project_ad
+    <include refid="allBaseColumnWhereList" />
+  </select>
+
+    <!-- mapper基础标准: 通用单表全字段查询 -->
+  <select id="findAllListDTO" resultMap="baseResultMapDTO" parameterType="com.sdm.auth.model.dto.FzBrandProjectDTO" flushCache="true" >
+    select 
+    <include refid="allBaseColumnListDTO" />
+    from fz_project_ad a
+    left join sd_brand b on a.brand_id = b.id
+    left join fz_brand_project c on c.id = a.project_id
+    <include refid="allBaseColumnWhereListDTO" />
+  </select>
+
+  <!-- mapper基础标准: 主键删除记录 -->
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from fz_project_ad
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- mapper基础标准: 通用单表保存 -->
+  <insert id="insert" parameterType="com.sdm.auth.model.po.FzProjectAd" >
+    insert into fz_project_ad
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != ''" >
+        id,
+      </if>
+      <if test="brandId != null and brandId != ''" >
+        brand_id,
+      </if>
+      <if test="projectId != null and projectId != ''" >
+        project_id,
+      </if>
+      <if test="adName != null and adName != ''" >
+        ad_name,
+      </if>
+      <if test="status != null and status != ''" >
+        status,
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remark != null and remark != ''" >
+        remark,
+      </if>
+      <if test="pictureUrl != null and pictureUrl != ''" >
+        picture_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != ''" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="brandId != null and brandId != ''" >
+        #{brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null and projectId != ''" >
+        #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="adName != null and adName != ''" >
+        #{adName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null and status != ''" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null and remark != ''" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null and pictureUrl != ''" >
+        #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- mapper基础标准: 通用主键更新 -->
+  <update id="update" parameterType="com.sdm.auth.model.po.FzProjectAd" >
+    update fz_project_ad
+    <trim prefix="SET" suffixOverrides="," >
+      <if test="brandId != null and brandId != ''" >
+        brand_id = #{brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null and projectId != ''" >
+        project_id = #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="adName != null and adName != ''" >
+        ad_name = #{adName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null and status != ''" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null and remark != ''" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null and pictureUrl != ''" >
+        picture_url = #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

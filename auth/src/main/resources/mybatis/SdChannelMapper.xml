@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sdm.auth.dao.SdChannelDao" >
+  <!-- mapper基础标准: 当前表所有字段映射结果集 -->
+  <resultMap id="baseResultMap" type="com.sdm.auth.model.po.SdChannel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="channelName" property="channelname" jdbcType="VARCHAR" />
+    <result column="uv" property="uv" jdbcType="INTEGER" />
+    <result column="pv" property="pv" jdbcType="INTEGER" />
+    <result column="regUserV" property="reguserv" jdbcType="INTEGER" />
+    <result column="forwardUv" property="forwarduv" jdbcType="INTEGER" />
+    <result column="forwardV" property="forwardv" jdbcType="INTEGER" />
+    <result column="indexPageCodeName" property="indexpagecodename" jdbcType="VARCHAR" />
+    <result column="indexPageCode" property="indexpagecode" jdbcType="VARCHAR" />
+    <result column="deleteEnable" property="deleteenable" jdbcType="CHAR" />
+    <result column="exp1" property="exp1" jdbcType="VARCHAR" />
+    <result column="exp2" property="exp2" jdbcType="VARCHAR" />
+    <result column="exp3" property="exp3" jdbcType="VARCHAR" />
+    <result column="exp4" property="exp4" jdbcType="VARCHAR" />
+    <result column="exp5" property="exp5" jdbcType="VARCHAR" />
+    <result column="exDate1" property="exdate1" jdbcType="TIMESTAMP" />
+    <result column="exDate2" property="exdate2" jdbcType="TIMESTAMP" />
+    <result column="exDate3" property="exdate3" jdbcType="TIMESTAMP" />
+    <result column="isDelete" property="isdelete" jdbcType="CHAR" />
+    <result column="createUser" property="createuser" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="modifyUser" property="modifyuser" jdbcType="VARCHAR" />
+    <result column="modifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="ResultMapWithBLOBs" type="com.sdm.auth.model.po.SdChannel" extends="baseResultMap" >
+    <result column="channelDesc" property="channeldesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <!-- mapper基础标准: 当前表所有字段结果集 -->
+  <sql id="allBaseColumnList" >
+    id, channelName, uv, pv, regUserV, forwardUv, forwardV, indexPageCodeName, indexPageCode, 
+    deleteEnable, exp1, exp2, exp3, exp4, exp5, exDate1, exDate2, exDate3, isDelete, 
+    createUser, createDate, modifyUser, modifyDate
+  </sql>
+
+  <!-- mapper基础标准: 当前表所有字段查询条件集 -->
+  <sql id="allBaseColumnWhereList" >
+    <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides="AND|OR" >
+      <if test="channelname != null and channelname != ''" >
+        and channelName = #{channelname,jdbcType=VARCHAR}
+      </if>
+      <if test="uv != null" >
+        and uv = #{uv,jdbcType=INTEGER}
+      </if>
+      <if test="pv != null" >
+        and pv = #{pv,jdbcType=INTEGER}
+      </if>
+      <if test="reguserv != null" >
+        and regUserV = #{reguserv,jdbcType=INTEGER}
+      </if>
+      <if test="forwarduv != null" >
+        and forwardUv = #{forwarduv,jdbcType=INTEGER}
+      </if>
+      <if test="forwardv != null" >
+        and forwardV = #{forwardv,jdbcType=INTEGER}
+      </if>
+      <if test="indexpagecodename != null and indexpagecodename != ''" >
+        and indexPageCodeName = #{indexpagecodename,jdbcType=VARCHAR}
+      </if>
+      <if test="indexpagecode != null and indexpagecode != ''" >
+        and indexPageCode = #{indexpagecode,jdbcType=VARCHAR}
+      </if>
+      <if test="deleteenable != null and deleteenable != ''" >
+        and deleteEnable = #{deleteenable,jdbcType=CHAR}
+      </if>
+      <if test="exp1 != null and exp1 != ''" >
+        and exp1 = #{exp1,jdbcType=VARCHAR}
+      </if>
+      <if test="exp2 != null and exp2 != ''" >
+        and exp2 = #{exp2,jdbcType=VARCHAR}
+      </if>
+      <if test="exp3 != null and exp3 != ''" >
+        and exp3 = #{exp3,jdbcType=VARCHAR}
+      </if>
+      <if test="exp4 != null and exp4 != ''" >
+        and exp4 = #{exp4,jdbcType=VARCHAR}
+      </if>
+      <if test="exp5 != null and exp5 != ''" >
+        and exp5 = #{exp5,jdbcType=VARCHAR}
+      </if>
+      <if test="exdate1 != null" >
+        and exDate1 = #{exdate1,jdbcType=TIMESTAMP}
+      </if>
+      <if test="exdate2 != null" >
+        and exDate2 = #{exdate2,jdbcType=TIMESTAMP}
+      </if>
+      <if test="exdate3 != null" >
+        and exDate3 = #{exdate3,jdbcType=TIMESTAMP}
+      </if>
+      <if test="isdelete != null and isdelete != ''" >
+        and isDelete = #{isdelete,jdbcType=CHAR}
+      </if>
+      <if test="createuser != null and createuser != ''" >
+        and createUser = #{createuser,jdbcType=VARCHAR}
+      </if>
+      <if test="createdate != null" >
+        and createDate = #{createdate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="modifyuser != null and modifyuser != ''" >
+        and modifyUser = #{modifyuser,jdbcType=VARCHAR}
+      </if>
+      <if test="modifydate != null" >
+        and modifyDate = #{modifydate,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+
+  <sql id="Blob_Column_List" >
+    channelDesc
+  </sql>
+
+  <!-- mapper基础标准: 通用单表主键查询 -->
+  <select id="findById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" flushCache="true" >
+    select 
+    <include refid="allBaseColumnList" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sd_channel
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <!-- mapper基础标准: 通用单表全字段查询 -->
+  <select id="findAllList" resultMap="ResultMapWithBLOBs" parameterType="com.sdm.auth.model.po.SdChannel" flushCache="true" >
+    select 
+    <include refid="allBaseColumnList" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sd_channel
+    <include refid="allBaseColumnWhereList" />
+    
+    ORDER BY id desc
+  </select>
+
+  <!-- mapper基础标准: 主键删除记录 -->
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from sd_channel
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <!-- mapper基础标准: 通用单表保存 -->
+  <insert id="insert" parameterType="com.sdm.auth.model.po.SdChannel" >
+    insert into sd_channel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != ''" >
+        id,
+      </if>
+      <if test="channelname != null and channelname != ''" >
+        channelName,
+      </if>
+      <if test="uv != null" >
+        uv,
+      </if>
+      <if test="pv != null" >
+        pv,
+      </if>
+      <if test="reguserv != null" >
+        regUserV,
+      </if>
+      <if test="forwarduv != null" >
+        forwardUv,
+      </if>
+      <if test="forwardv != null" >
+        forwardV,
+      </if>
+      <if test="indexpagecodename != null and indexpagecodename != ''" >
+        indexPageCodeName,
+      </if>
+      <if test="indexpagecode != null and indexpagecode != ''" >
+        indexPageCode,
+      </if>
+      <if test="deleteenable != null and deleteenable != ''" >
+        deleteEnable,
+      </if>
+      <if test="exp1 != null and exp1 != ''" >
+        exp1,
+      </if>
+      <if test="exp2 != null and exp2 != ''" >
+        exp2,
+      </if>
+      <if test="exp3 != null and exp3 != ''" >
+        exp3,
+      </if>
+      <if test="exp4 != null and exp4 != ''" >
+        exp4,
+      </if>
+      <if test="exp5 != null and exp5 != ''" >
+        exp5,
+      </if>
+      <if test="exdate1 != null" >
+        exDate1,
+      </if>
+      <if test="exdate2 != null" >
+        exDate2,
+      </if>
+      <if test="exdate3 != null" >
+        exDate3,
+      </if>
+      <if test="isdelete != null and isdelete != ''" >
+        isDelete,
+      </if>
+      <if test="createuser != null and createuser != ''" >
+        createUser,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="modifyuser != null and modifyuser != ''" >
+        modifyUser,
+      </if>
+      <if test="modifydate != null" >
+        modifyDate,
+      </if>
+      <if test="channeldesc != null and channeldesc != ''" >
+        channelDesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != ''" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="channelname != null and channelname != ''" >
+        #{channelname,jdbcType=VARCHAR},
+      </if>
+      <if test="uv != null" >
+        #{uv,jdbcType=INTEGER},
+      </if>
+      <if test="pv != null" >
+        #{pv,jdbcType=INTEGER},
+      </if>
+      <if test="reguserv != null" >
+        #{reguserv,jdbcType=INTEGER},
+      </if>
+      <if test="forwarduv != null" >
+        #{forwarduv,jdbcType=INTEGER},
+      </if>
+      <if test="forwardv != null" >
+        #{forwardv,jdbcType=INTEGER},
+      </if>
+      <if test="indexpagecodename != null and indexpagecodename != ''" >
+        #{indexpagecodename,jdbcType=VARCHAR},
+      </if>
+      <if test="indexpagecode != null and indexpagecode != ''" >
+        #{indexpagecode,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteenable != null and deleteenable != ''" >
+        #{deleteenable,jdbcType=CHAR},
+      </if>
+      <if test="exp1 != null and exp1 != ''" >
+        #{exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="exp2 != null and exp2 != ''" >
+        #{exp2,jdbcType=VARCHAR},
+      </if>
+      <if test="exp3 != null and exp3 != ''" >
+        #{exp3,jdbcType=VARCHAR},
+      </if>
+      <if test="exp4 != null and exp4 != ''" >
+        #{exp4,jdbcType=VARCHAR},
+      </if>
+      <if test="exp5 != null and exp5 != ''" >
+        #{exp5,jdbcType=VARCHAR},
+      </if>
+      <if test="exdate1 != null" >
+        #{exdate1,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exdate2 != null" >
+        #{exdate2,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exdate3 != null" >
+        #{exdate3,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null and isdelete != ''" >
+        #{isdelete,jdbcType=CHAR},
+      </if>
+      <if test="createuser != null and createuser != ''" >
+        #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyuser != null and modifyuser != ''" >
+        #{modifyuser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="channeldesc != null and channeldesc != ''" >
+        #{channeldesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- mapper基础标准: 通用主键更新 -->
+  <update id="update" parameterType="com.sdm.auth.model.po.SdChannel" >
+    update sd_channel
+    <trim prefix="SET" suffixOverrides="," >
+      <if test="channelname != null and channelname != ''" >
+        channelName = #{channelname,jdbcType=VARCHAR},
+      </if>
+      <if test="uv != null" >
+        uv = #{uv,jdbcType=INTEGER},
+      </if>
+      <if test="pv != null" >
+        pv = #{pv,jdbcType=INTEGER},
+      </if>
+      <if test="reguserv != null" >
+        regUserV = #{reguserv,jdbcType=INTEGER},
+      </if>
+      <if test="forwarduv != null" >
+        forwardUv = #{forwarduv,jdbcType=INTEGER},
+      </if>
+      <if test="forwardv != null" >
+        forwardV = #{forwardv,jdbcType=INTEGER},
+      </if>
+      <if test="indexpagecodename != null and indexpagecodename != ''" >
+        indexPageCodeName = #{indexpagecodename,jdbcType=VARCHAR},
+      </if>
+      <if test="indexpagecode != null and indexpagecode != ''" >
+        indexPageCode = #{indexpagecode,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteenable != null and deleteenable != ''" >
+        deleteEnable = #{deleteenable,jdbcType=CHAR},
+      </if>
+      <if test="exp1 != null and exp1 != ''" >
+        exp1 = #{exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="exp2 != null and exp2 != ''" >
+        exp2 = #{exp2,jdbcType=VARCHAR},
+      </if>
+      <if test="exp3 != null and exp3 != ''" >
+        exp3 = #{exp3,jdbcType=VARCHAR},
+      </if>
+      <if test="exp4 != null and exp4 != ''" >
+        exp4 = #{exp4,jdbcType=VARCHAR},
+      </if>
+      <if test="exp5 != null and exp5 != ''" >
+        exp5 = #{exp5,jdbcType=VARCHAR},
+      </if>
+      <if test="exdate1 != null" >
+        exDate1 = #{exdate1,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exdate2 != null" >
+        exDate2 = #{exdate2,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exdate3 != null" >
+        exDate3 = #{exdate3,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdelete != null and isdelete != ''" >
+        isDelete = #{isdelete,jdbcType=CHAR},
+      </if>
+      <if test="createuser != null and createuser != ''" >
+        createUser = #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyuser != null and modifyuser != ''" >
+        modifyUser = #{modifyuser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifydate != null" >
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="channeldesc != null and channeldesc != ''" >
+        channelDesc = #{channeldesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.sdm.auth.model.po.SdChannel" >
+    update sd_channel
+    set channelName = #{channelname,jdbcType=VARCHAR},
+      uv = #{uv,jdbcType=INTEGER},
+      pv = #{pv,jdbcType=INTEGER},
+      regUserV = #{reguserv,jdbcType=INTEGER},
+      forwardUv = #{forwarduv,jdbcType=INTEGER},
+      forwardV = #{forwardv,jdbcType=INTEGER},
+      indexPageCodeName = #{indexpagecodename,jdbcType=VARCHAR},
+      indexPageCode = #{indexpagecode,jdbcType=VARCHAR},
+      deleteEnable = #{deleteenable,jdbcType=CHAR},
+      exp1 = #{exp1,jdbcType=VARCHAR},
+      exp2 = #{exp2,jdbcType=VARCHAR},
+      exp3 = #{exp3,jdbcType=VARCHAR},
+      exp4 = #{exp4,jdbcType=VARCHAR},
+      exp5 = #{exp5,jdbcType=VARCHAR},
+      exDate1 = #{exdate1,jdbcType=TIMESTAMP},
+      exDate2 = #{exdate2,jdbcType=TIMESTAMP},
+      exDate3 = #{exdate3,jdbcType=TIMESTAMP},
+      isDelete = #{isdelete,jdbcType=CHAR},
+      createUser = #{createuser,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      modifyUser = #{modifyuser,jdbcType=VARCHAR},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      channelDesc = #{channeldesc,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

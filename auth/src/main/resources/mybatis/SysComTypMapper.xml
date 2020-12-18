@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sdm.auth.dao.SysComTypDao" >
+  <!-- mapper基础标准: 当前表所有字段映射结果集 -->
+  <resultMap id="baseResultMap" type="com.sdm.auth.model.po.SysComTyp" >
+    <id column="com_typ" property="comTyp" jdbcType="VARCHAR" />
+    <result column="com_typ_desc" property="comTypDesc" jdbcType="VARCHAR" />
+    <result column="com_status" property="comStatus" jdbcType="VARCHAR" />
+    <result column="com_sys_ind" property="comSysInd" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!-- mapper基础标准: 当前表所有字段结果集 -->
+  <sql id="allBaseColumnList" >
+    com_typ, com_typ_desc, com_status, com_sys_ind, create_by, create_date, update_by, 
+    update_date, remark
+  </sql>
+
+  <!-- mapper基础标准: 当前表所有字段查询条件集 -->
+  <sql id="allBaseColumnWhereList" >
+    <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides="AND|OR" >
+      <if test="comTypDesc != null and comTypDesc != ''" >
+        and com_typ_desc = #{comTypDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="comStatus != null and comStatus != ''" >
+        and com_status = #{comStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="comSysInd != null and comSysInd != ''" >
+        and com_sys_ind = #{comSysInd,jdbcType=VARCHAR}
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        and create_by = #{createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="createDate != null and createDate != ''" >
+        and create_date = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        and update_by = #{updateBy,jdbcType=VARCHAR}
+      </if>
+      <if test="updateDate != null and updateDate != ''" >
+        and update_date = #{updateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="remark != null and remark != ''" >
+        and remark = #{remark,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- mapper基础标准: 通用单表主键查询 -->
+  <select id="findById" resultMap="baseResultMap" parameterType="java.lang.String" flushCache="true" >
+    select 
+    <include refid="allBaseColumnList" />
+    from sys_com_typ
+    where com_typ = #{comTyp,jdbcType=VARCHAR}
+  </select>
+
+  <!-- mapper基础标准: 通用单表全字段查询 -->
+  <select id="findAllList" resultMap="baseResultMap" parameterType="com.sdm.auth.model.po.SysComTyp" flushCache="true" >
+    select 
+    <include refid="allBaseColumnList" />
+    from sys_com_typ
+    <include refid="allBaseColumnWhereList" />
+  </select>
+
+  <!-- mapper基础标准: 主键删除记录 -->
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from sys_com_typ
+    where com_typ = #{comTyp,jdbcType=VARCHAR}
+  </delete>
+
+  <!-- mapper基础标准: 通用单表保存 -->
+  <insert id="insert" parameterType="com.sdm.auth.model.po.SysComTyp" >
+    insert into sys_com_typ
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="comTyp != null and comTyp != ''" >
+        com_typ,
+      </if>
+      <if test="comTypDesc != null and comTypDesc != ''" >
+        com_typ_desc,
+      </if>
+      <if test="comStatus != null and comStatus != ''" >
+        com_status,
+      </if>
+      <if test="comSysInd != null and comSysInd != ''" >
+        com_sys_ind,
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        create_by,
+      </if>
+      <if test="createDate != null and createDate != ''" >
+        create_date,
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        update_by,
+      </if>
+      <if test="updateDate != null and updateDate != ''" >
+        update_date,
+      </if>
+      <if test="remark != null and remark != ''" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="comTyp != null and comTyp != ''" >
+        #{comTyp,jdbcType=VARCHAR},
+      </if>
+      <if test="comTypDesc != null and comTypDesc != ''" >
+        #{comTypDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="comStatus != null and comStatus != ''" >
+        #{comStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="comSysInd != null and comSysInd != ''" >
+        #{comSysInd,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null and createDate != ''" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null and updateDate != ''" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null and remark != ''" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- mapper基础标准: 通用主键更新 -->
+  <update id="update" parameterType="com.sdm.auth.model.po.SysComTyp" >
+    update sys_com_typ
+    <trim prefix="SET" suffixOverrides="," >
+      <if test="comTypDesc != null and comTypDesc != ''" >
+        com_typ_desc = #{comTypDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="comStatus != null and comStatus != ''" >
+        com_status = #{comStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="comSysInd != null and comSysInd != ''" >
+        com_sys_ind = #{comSysInd,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null and createDate != ''" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null and updateDate != ''" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null and remark != ''" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where com_typ = #{comTyp,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

@@ -5,7 +5,6 @@ import lombok.Data;
 /**
  * 分页信息
  */
-
 @Data
 public class PageInfoQuery {
 

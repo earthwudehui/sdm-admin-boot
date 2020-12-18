@@ -1,13 +1,14 @@
 /**
- * CopyRight © 2018 上海分忧. All Rights Reserved 2020-10-27 Created
+ * CopyRight ©2020 上海分忧. All Rights Reserved 2020-11-27 Created
  */
 package com.sdm.auth.dao;
 
 import java.util.List;
 
-import com.sdm.auth.model.po.SysMenu;
+import com.sdm.auth.model.dto.FzProjectAdDTO;
+import com.sdm.auth.model.po.FzProjectAd;
 
-public interface SysMenuDao {
+public interface FzProjectAdDao {
     /**
      *
      * @Description 一句话描述方法用法
@@ -24,7 +25,7 @@ public interface SysMenuDao {
      * @return
      * @see: 需要参考的类或方法
      */
-    int insert(SysMenu record);
+    int insert(FzProjectAd record);
 
     /**
      *
@@ -33,7 +34,7 @@ public interface SysMenuDao {
      * @return
      * @see: 需要参考的类或方法
      */
-    SysMenu findById(Long id);
+    FzProjectAd findById(Long id);
 
     /**
      *
@@ -42,7 +43,14 @@ public interface SysMenuDao {
      * @return
      * @see: 需要参考的类或方法
      */
-    List<SysMenu> findAllList(SysMenu record);
+    List<FzProjectAd> findAllList(FzProjectAd record);
+
+    /**
+     * 
+     * @param record
+     * @return
+     */
+    List<FzProjectAdDTO> findAllListDTO(FzProjectAdDTO record);
 
     /**
      *
@@ -51,5 +59,5 @@ public interface SysMenuDao {
      * @return
      * @see: 需要参考的类或方法
      */
-    int update(SysMenu record);
+    int update(FzProjectAd record);
 }

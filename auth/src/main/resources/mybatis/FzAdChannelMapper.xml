@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sdm.auth.dao.FzAdChannelDao" >
+  <!-- mapper基础标准: 当前表所有字段映射结果集 -->
+  <resultMap id="baseResultMap" type="com.sdm.auth.model.po.FzAdChannel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+    <result column="brand_id" property="brandId" jdbcType="VARCHAR" />
+    <result column="ad_id" property="adId" jdbcType="BIGINT" />
+    <result column="channel_type" property="channelType" jdbcType="VARCHAR" />
+    <result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="type_province" property="typeProvince" jdbcType="VARCHAR" />
+    <result column="type_city" property="typeCity" jdbcType="VARCHAR" />
+    <result column="type_county" property="typeCounty" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!-- mapper基础标准: 当前表所有字段结果集 -->
+  <sql id="allBaseColumnList" >
+    id, channel_id, brand_id, ad_id, channel_type, channel_name, start_date, end_date, 
+    type, type_province, type_city, type_county, status, create_by, create_date, update_by, 
+    update_date, remark
+  </sql>
+
+  <!-- mapper基础标准: 当前表所有字段查询条件集 -->
+  <sql id="allBaseColumnWhereList" >
+    <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides="AND|OR" >
+      <if test="channelId != null and channelId != ''" >
+        and channel_id = #{channelId,jdbcType=VARCHAR}
+      </if>
+      <if test="brandId != null and brandId != ''" >
+        and brand_id = #{brandId,jdbcType=VARCHAR}
+      </if>
+      <if test="adId != null and adId != ''" >
+        and ad_id = #{adId,jdbcType=BIGINT}
+      </if>
+      <if test="channelType != null and channelType != ''" >
+        and channel_type = #{channelType,jdbcType=VARCHAR}
+      </if>
+      <if test="channelName != null and channelName != ''" >
+        and channel_name = #{channelName,jdbcType=VARCHAR}
+      </if>
+      <if test="startDate != null and startDate != ''" >
+        and start_date = #{startDate,jdbcType=VARCHAR}
+      </if>
+      <if test="endDate != null and endDate != ''" >
+        and end_date = #{endDate,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null and type != ''" >
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="typeProvince != null and typeProvince != ''" >
+        and type_province = #{typeProvince,jdbcType=VARCHAR}
+      </if>
+      <if test="typeCity != null and typeCity != ''" >
+        and type_city = #{typeCity,jdbcType=VARCHAR}
+      </if>
+      <if test="typeCounty != null and typeCounty != ''" >
+        and type_county = #{typeCounty,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != ''" >
+        and status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        and create_by = #{createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="createDate != null" >
+        and create_date = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        and update_by = #{updateBy,jdbcType=VARCHAR}
+      </if>
+      <if test="updateDate != null" >
+        and update_date = #{updateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="remark != null and remark != ''" >
+        and remark = #{remark,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- mapper基础标准: 通用单表主键查询 -->
+  <select id="findById" resultMap="baseResultMap" parameterType="java.lang.Long" flushCache="true" >
+    select 
+    <include refid="allBaseColumnList" />
+    from fz_ad_channel
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- mapper基础标准: 通用单表全字段查询 -->
+  <select id="findAllList" resultMap="baseResultMap" parameterType="com.sdm.auth.model.po.FzAdChannel" flushCache="true" >
+    select 
+    <include refid="allBaseColumnList" />
+    from fz_ad_channel
+    <include refid="allBaseColumnWhereList" />
+  </select>
+
+  <!-- mapper基础标准: 主键删除记录 -->
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from fz_ad_channel
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- mapper基础标准: 通用单表保存 -->
+  <insert id="insert" parameterType="com.sdm.auth.model.po.FzAdChannel" >
+    insert into fz_ad_channel
+         <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != ''" >
+        id,
+      </if>
+      <if test="channelId != null and channelId != ''" >
+        channel_id,
+      </if>
+      <if test="brandId != null and brandId != ''" >
+        brand_id,
+      </if>
+      <if test="adId != null and adId != ''" >
+        ad_id,
+      </if>
+      <if test="channelType != null and channelType != ''" >
+        channel_type,
+      </if>
+      <if test="channelName != null and channelName != ''" >
+        channel_name,
+      </if>
+      <if test="startDate != null and startDate != ''" >
+        start_date,
+      </if>
+      <if test="endDate != null and endDate != ''" >
+        end_date,
+      </if>
+      <if test="type != null and type != ''" >
+        type,
+      </if>
+      <if test="typeProvince != null and typeProvince != ''" >
+        type_province,
+      </if>
+      <if test="typeCity != null and typeCity != ''" >
+        type_city,
+      </if>
+      <if test="typeCounty != null and typeCounty != ''" >
+        type_county,
+      </if>
+      <if test="status != null and status != ''" >
+        status,
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remark != null and remark != ''" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != ''" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="channelId != null and channelId != ''" >
+        #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null and brandId != ''" >
+        #{brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="adId != null and adId != ''" >
+        #{adId,jdbcType=BIGINT},
+      </if>
+      <if test="channelType != null and channelType != ''" >
+        #{channelType,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null and channelName != ''" >
+        #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null and startDate != ''" >
+        #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null and endDate != ''" >
+        #{endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null and type != ''" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="typeProvince != null and typeProvince != ''" >
+        #{typeProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCity != null and typeCity != ''" >
+        #{typeCity,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCounty != null and typeCounty != ''" >
+        #{typeCounty,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null and status != ''" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null and remark != ''" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- mapper基础标准: 通用主键更新 -->
+  <update id="update" parameterType="com.sdm.auth.model.po.FzAdChannel" >
+    update fz_ad_channel
+    <trim prefix="SET" suffixOverrides="," >
+      <if test="channelId != null and channelId != ''" >
+        channel_id = #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null and brandId != ''" >
+        brand_id = #{brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="adId != null and adId != ''" >
+        ad_id = #{adId,jdbcType=BIGINT},
+      </if>
+      <if test="channelType != null and channelType != ''" >
+        channel_type = #{channelType,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null and channelName != ''" >
+        channel_name = #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null and startDate != ''" >
+        start_date = #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null and endDate != ''" >
+        end_date = #{endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null and type != ''" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="typeProvince != null and typeProvince != ''" >
+        type_province = #{typeProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCity != null and typeCity != ''" >
+        type_city = #{typeCity,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCounty != null and typeCounty != ''" >
+        type_county = #{typeCounty,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null and status != ''" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null and updateBy != ''" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null and remark != ''" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

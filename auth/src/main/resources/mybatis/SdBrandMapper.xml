@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sdm.auth.dao.SdBrandDao" >
+  <!-- mapper基础标准: 当前表所有字段映射结果集 -->
+  <resultMap id="baseResultMap" type="com.sdm.auth.model.po.SdBrand" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="chinaUniversityId" property="chinauniversityid" jdbcType="VARCHAR" />
+    <result column="xxdm" property="xxdm" jdbcType="VARCHAR" />
+    <result column="xxmc" property="xxmc" jdbcType="VARCHAR" />
+    <result column="xxywmc" property="xxywmc" jdbcType="VARCHAR" />
+    <result column="isDelete" property="isdelete" jdbcType="CHAR" />
+  </resultMap>
+
+  <!-- mapper基础标准: 当前表所有字段结果集 -->
+  <sql id="allBaseColumnList" >
+    id, chinaUniversityId, xxdm, xxmc, xxywmc, isDelete
+  </sql>
+
+  <!-- mapper基础标准: 当前表所有字段查询条件集 -->
+  <sql id="allBaseColumnWhereList" >
+    <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides="AND|OR" >
+      <if test="chinauniversityid != null and chinauniversityid != ''" >
+        and chinaUniversityId = #{chinauniversityid,jdbcType=VARCHAR}
+      </if>
+      <if test="xxdm != null and xxdm != ''" >
+        and xxdm = #{xxdm,jdbcType=VARCHAR}
+      </if>
+      <if test="xxmc != null and xxmc != ''" >
+        and xxmc = #{xxmc,jdbcType=VARCHAR}
+      </if>
+      <if test="xxywmc != null and xxywmc != ''" >
+        and xxywmc = #{xxywmc,jdbcType=VARCHAR}
+      </if>
+      <if test="isdelete != null and isdelete != ''" >
+        and isDelete = #{isdelete,jdbcType=CHAR}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- mapper基础标准: 通用单表主键查询 -->
+  <select id="findById" resultMap="baseResultMap" parameterType="java.lang.String" flushCache="true" >
+    select 
+    <include refid="allBaseColumnList" />
+    from sd_brand
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <!-- mapper基础标准: 通用单表全字段查询 -->
+  <select id="findAllList" resultMap="baseResultMap" parameterType="com.sdm.auth.model.po.SdBrand" flushCache="true" >
+    select 
+    <include refid="allBaseColumnList" />
+    from sd_brand
+    <include refid="allBaseColumnWhereList" />
+  </select>
+
+  <!-- mapper基础标准: 主键删除记录 -->
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from sd_brand
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <!-- mapper基础标准: 通用单表保存 -->
+  <insert id="insert" parameterType="com.sdm.auth.model.po.SdBrand" >
+    insert into sd_brand
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != ''" >
+        id,
+      </if>
+      <if test="chinauniversityid != null and chinauniversityid != ''" >
+        chinaUniversityId,
+      </if>
+      <if test="xxdm != null and xxdm != ''" >
+        xxdm,
+      </if>
+      <if test="xxmc != null and xxmc != ''" >
+        xxmc,
+      </if>
+      <if test="xxywmc != null and xxywmc != ''" >
+        xxywmc,
+      </if>
+      <if test="isdelete != null and isdelete != ''" >
+        isDelete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != ''" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="chinauniversityid != null and chinauniversityid != ''" >
+        #{chinauniversityid,jdbcType=VARCHAR},
+      </if>
+      <if test="xxdm != null and xxdm != ''" >
+        #{xxdm,jdbcType=VARCHAR},
+      </if>
+      <if test="xxmc != null and xxmc != ''" >
+        #{xxmc,jdbcType=VARCHAR},
+      </if>
+      <if test="xxywmc != null and xxywmc != ''" >
+        #{xxywmc,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null and isdelete != ''" >
+        #{isdelete,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- mapper基础标准: 通用主键更新 -->
+  <update id="update" parameterType="com.sdm.auth.model.po.SdBrand" >
+    update sd_brand
+    <trim prefix="SET" suffixOverrides="," >
+      <if test="chinauniversityid != null and chinauniversityid != ''" >
+        chinaUniversityId = #{chinauniversityid,jdbcType=VARCHAR},
+      </if>
+      <if test="xxdm != null and xxdm != ''" >
+        xxdm = #{xxdm,jdbcType=VARCHAR},
+      </if>
+      <if test="xxmc != null and xxmc != ''" >
+        xxmc = #{xxmc,jdbcType=VARCHAR},
+      </if>
+      <if test="xxywmc != null and xxywmc != ''" >
+        xxywmc = #{xxywmc,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null and isdelete != ''" >
+        isDelete = #{isdelete,jdbcType=CHAR},
+      </if>
+    </trim>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>
