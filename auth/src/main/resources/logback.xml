@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="TRUE">
 <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
-	<property name="LOG_HOME" value="/home/admin/app" />
+	<property name="LOG_HOME" value="/usr/local/sdm/analysis/logs" />
 	<!-- 控制台输出 -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -13,7 +13,7 @@
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!--日志文件输出的文件名 -->
-			<FileNamePattern>${LOG_HOME}/core-biz.log.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<FileNamePattern>${LOG_HOME}/datav.log.%d{yyyy-MM-dd}.log</FileNamePattern>
 			<!--日志文件保留天数 -->
 			<MaxHistory>90</MaxHistory>
 		</rollingPolicy>
@@ -26,7 +26,7 @@
 	<!-- 定时任务log日志 -->
 	<appender name="task" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/opt/tomcat/logs/core-biz-task.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${LOG_HOME}/datav.tasklog.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">

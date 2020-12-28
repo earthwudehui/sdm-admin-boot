@@ -43,4 +43,12 @@ public interface FzAdChannelService {
      * @return
      */
     public FzAdChannelDTO updateFzAdChannel(FzAdChannelQuery fzAdChannelQuery);
+
+    /**
+     * 删除FzAdChannel
+     * 
+     * @param id
+     * @return
+     */
+    public boolean deleteFzAdChannelById(Long id);
 }

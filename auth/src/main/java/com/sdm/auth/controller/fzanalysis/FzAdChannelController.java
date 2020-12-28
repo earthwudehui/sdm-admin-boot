@@ -92,10 +92,23 @@ public class FzAdChannelController {
      * @return
      */
     @PostMapping("/update")
-    public FzAdChannelQuery updateFzAdChannel(HttpServletRequest request, @RequestBody Map<String, Object> data) {
+    public FzAdChannelQuery updateFzAdChannel(HttpServletRequest request,
+        @RequestBody FzAdChannelQuery fzAdChannelQuery) {
 
-        return modelMapper.map(fzAdChannelService.updateFzAdChannel(modelMapper.map(data, FzAdChannelQuery.class)),
-            FzAdChannelQuery.class);
+        return modelMapper.map(fzAdChannelService.updateFzAdChannel(fzAdChannelQuery), FzAdChannelQuery.class);
+    }
+
+    /**
+     * 删除
+     * 
+     * @param request
+     * @param id
+     * @return
+     */
+    @RequestMapping("/delete")
+    public boolean deleteFzAdChannelById(HttpServletRequest request, String id) {
+
+        return fzAdChannelService.deleteFzAdChannelById(Long.valueOf(id));
     }
 
 }

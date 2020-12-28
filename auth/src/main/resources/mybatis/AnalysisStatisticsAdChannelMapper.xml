@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sdm.auth.dao.AnalysisStatisticsAdChannelDao" >
+  <!-- mapper基础标准: 当前表所有字段映射结果集 -->
+  <resultMap id="baseResultMap" type="com.sdm.auth.model.bio.AnalysisAdStatisticsBIO" >
+       <result column="id" property="id" jdbcType="BIGINT" />
+     <result column="brand_id" property="brandId" jdbcType="VARCHAR" />
+     <result column="xxmc" property="xxmc" jdbcType="VARCHAR" />
+     <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="ad_id" property="adId" jdbcType="BIGINT" />
+    <result column="ad_name" property="adName" jdbcType="VARCHAR" />
+     <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR" />
+    <result column="channel_Name" property="channelName" jdbcType="VARCHAR" />
+    <result column="channel_type" property="channelType" jdbcType="VARCHAR" />
+    <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+    <result column="statistics_date" property="statisticsDate" jdbcType="VARCHAR" />
+    <result column="statistics_date_start" property="statisticsDateStart" jdbcType="VARCHAR" />
+    <result column="statistics_date_end" property="statisticsDateEnd" jdbcType="VARCHAR" />
+    <result column="scan_code_uv" property="scanCodeUV" jdbcType="VARCHAR" />
+    <result column="jump_UV" property="jumpUV" jdbcType="VARCHAR" />
+
+  </resultMap>
+
+ <!-- mapper基础标准: 通用单表全字段查询 -->
+  <select id="queryByAdStatistics" resultMap="baseResultMap" parameterType="com.sdm.auth.model.bio.AnalysisAdStatisticsBIO" flushCache="true" >
+    
+	SELECT 
+		c.picture_url as picture_url,c.a as a,c.ad_name as ad_name,c.a0 as ad_id,c.a1 as channel_id,c.a2 as channel_name,c.a3 as channel_type,
+		c.a4 as statistics_date,c.a5 as a5,c.a6 as scan_code_uv,c.a7 as a7,c.a8 as jump_UV,c.a9 as a9,c.a10 as a10  from (
+		SELECT  a.*,b.b1 as a7,b.b3 as a8,ROUND(b.b1/a.a5,2) a9,ROUND(b.b3/a6,2) a10 from (
+				SELECT fzad.picture_url,fzad.ad_name,fz.brand_id a,fz.ad_id a0,fz.channel_id a1,fz.channel_name a2,fz.channel_type a3,SUBSTR(sd.createDate,1,10) a4,COUNT(*) a5,
+					COUNT(DISTINCT (sd.fansId)) a6 from 
+				fz_ad_channel fz
+				LEFT JOIN fz_project_ad fzad on fzad.id = fz.ad_id
+				LEFT JOIN sd_special_log sd on fz.channel_id = sd.channelId
+				where   fz.`status` =0   
+				<if test="projectId != null and projectId != ''" >
+				 		and fzad.project_id= #{projectId,jdbcType=VARCHAR}   
+	       		</if>
+						and fz.channel_type = 1 and SUBSTR(sd.createDate,1,10)  BETWEEN fz.start_date and fz.end_date and sd.logType = '浏览' 
+				GROUP BY fz.channel_id,SUBSTR(sd.createDate,1,10) 
+			union all
+				SELECT fzad.picture_url,fzad.ad_name,fzad.project_id a,fz.ad_id a0,fz.channel_id a1,fz.channel_name a2,fz.channel_type a3,SUBSTR(sd.createDate,1,10) a4,COUNT(*) a5,
+					COUNT(DISTINCT (sd.fansId)) a6 from 
+				fz_ad_channel fz
+				LEFT JOIN fz_project_ad fzad on fzad.id = fz.ad_id
+				LEFT JOIN sd_channel_index_log sd on  fz.channel_id =sd.channelId
+				where   fz.`status` =0 
+				<if test="projectId != null and projectId != ''" >
+				 		and fzad.project_id= #{projectId,jdbcType=VARCHAR}   
+	       		</if>
+						and  fz.channel_type = 0 and SUBSTR(sd.createDate,1,10)  BETWEEN fz.start_date and fz.end_date and sd.logType = '浏览' 
+				GROUP BY fz.channel_id,SUBSTR(sd.createDate,1,10)			
+		)a
+		LEFT JOIN
+		(
+				SELECT fz.channel_id,fz.channel_name,SUBSTR(sl.createDate,1,10) b2,COUNT(*) b1,COUNT(DISTINCT (sl.fansId)) b3 from 
+					fz_ad_channel fz
+				LEFT JOIN sd_goods sd on fz.brand_id = sd.brandId
+				LEFT JOIN sd_fans_log sl on sd.id = sl.goodsId and fz.channel_id = sl.channelId
+					where   fz.`status` =0 and  SUBSTR(sl.createDate,1,10)  BETWEEN fz.start_date and fz.end_date and sl.logType = '跳转'
+					GROUP BY fz.channel_id,SUBSTR(sl.createDate,1,10)
+		) b on a.a1 = b.channel_id and a.a4 = b.b2) c
+	
+		     <trim prefix="WHERE" prefixOverrides="AND|OR" suffixOverrides="AND|OR" >
+				  <if test="statisticsDateStart != null and statisticsDateStart !=''   and statisticsDateEnd != null and statisticsDateEnd != ''" >
+		     			 and c.a4 BETWEEN  #{statisticsDateStart,jdbcType=VARCHAR} and  #{statisticsDateEnd,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="adName != null and adName != ''" >
+						and c.ad_name  like "%" #{adName,jdbcType=VARCHAR}"%" 
+	       		</if>
+    		</trim>
+      ORDER BY c.a4 desc,c.a0
+  </select>
+  
+  <!-- mapper基础标准: 通用单表全字段查询 -->
+  <select id="queryByAd" resultMap="baseResultMap" parameterType="com.sdm.auth.model.bio.AnalysisAdStatisticsBIO" flushCache="true" >
+    
+		SELECT 
+			c.project_id,c.a0 as ad_id,c.picture_url as picture_url,c.ad_name as ad_name,c.id,c.a1 as channel_id,c.a2 as channel_name,c.a3 as channel_type,c.start_date,c.end_date,
+			sum(c.a5) as a5,sum(c.a6) as scan_code_uv,sum(c.a7) as a7,sum(c.a8) as jump_UV
+			,ROUND(sum(c.a7)/sum(c.a5),2) a9,ROUND(sum(c.a8)/sum(c.a6),2) a10
+		from (
+			SELECT a.*,b.b1 as a7,b.b3 as a8 from (
+				SELECT fz.start_date,fz.end_date,fz.id,fzad.picture_url,fzad.ad_name,fzad.project_id,fz.ad_id a0,fz.channel_id a1,fz.channel_name a2,
+							fz.channel_type a3,SUBSTR(sd.createDate,1,10) a4,COUNT(*) a5,COUNT(DISTINCT (sd.fansId)) a6 from 
+				fz_ad_channel fz
+				LEFT JOIN fz_project_ad fzad on fzad.id = fz.ad_id
+				LEFT JOIN sd_special_log sd on fz.channel_id = sd.channelId
+				where fz.channel_type = 1  and  fz.`status` =0   
+					<if test="projectId != null and projectId != ''" >
+				 		and fzad.project_id= #{projectId,jdbcType=VARCHAR}   
+	       			</if>
+					<if test="adName != null and adName != ''" >
+						and fzad.ad_name  like "%" #{adName,jdbcType=VARCHAR}"%" 
+	       			</if>
+					and SUBSTR(sd.createDate,1,10)  BETWEEN fz.start_date and fz.end_date and sd.logType = '浏览'
+				GROUP BY fz.channel_id,SUBSTR(sd.createDate,1,10) 
+				union all
+				SELECT fz.start_date,fz.end_date,fz.id,fzad.picture_url,fzad.ad_name,fzad.project_id,fz.ad_id a0,fz.channel_id a1,fz.channel_name a2,
+							fz.channel_type a3,SUBSTR(sd.createDate,1,10) a4,COUNT(*) a5,COUNT(DISTINCT (sd.fansId)) a6 from 
+				fz_ad_channel fz
+				LEFT JOIN fz_project_ad fzad on fzad.id = fz.ad_id
+				LEFT JOIN sd_channel_index_log sd on  fz.channel_id =sd.channelId
+				where fz.channel_type = 0  and  fz.`status` =0   
+					<if test="projectId != null and projectId != ''" >
+				 		and fzad.project_id= #{projectId,jdbcType=VARCHAR}   
+	       			</if>
+					<if test="adName != null and adName != ''" >
+						and fzad.ad_name  like "%" #{adName,jdbcType=VARCHAR}"%" 
+	       			</if>
+					and SUBSTR(sd.createDate,1,10)  BETWEEN fz.start_date and fz.end_date and sd.logType = '浏览'
+				GROUP BY fz.channel_id,SUBSTR(sd.createDate,1,10) 
+				)a
+			LEFT JOIN
+			(
+				SELECT fz.channel_id,fz.channel_name,SUBSTR(sl.createDate,1,10) b2,COUNT(*) b1,COUNT(DISTINCT (sl.fansId)) b3 
+				from fz_ad_channel fz
+				LEFT JOIN sd_goods sd on fz.brand_id = sd.brandId
+				LEFT JOIN sd_fans_log sl on sd.id = sl.goodsId and fz.channel_id = sl.channelId
+				where   fz.`status` =0 and  SUBSTR(sl.createDate,1,10)  BETWEEN fz.start_date and fz.end_date and sl.logType = '跳转'
+					GROUP BY fz.channel_id,SUBSTR(sl.createDate,1,10)
+			) b
+					on a.a1 = b.channel_id and a.a4 = b.b2) c
+				GROUP BY c.id
+			ORDER BY c.c.a0 desc,c.a1,c.start_date desc	
+  	</select>
+    <select id="queryByAdChannelId" resultType="java.util.HashMap" parameterType="java.lang.Long">
+		  SELECT  '扫码' as 'seriesField',SUBSTR(sd.createDate,1,10) 'xField',COUNT(DISTINCT (sd.fansId)) 'yField' 
+		  	from fz_ad_channel fz
+			LEFT JOIN sd_special_log sd on fz.channel_id = sd.channelId
+			where  fz.channel_type = 1 and  fz.id= #{id,jdbcType=BIGINT}  	and SUBSTR(sd.createDate,1,10)  BETWEEN fz.start_date and fz.end_date
+				and sd.logType = '浏览' GROUP BY fz.channel_id,SUBSTR(sd.createDate,1,10) 
+		union all		
+		SELECT  '扫码' as 'seriesField',SUBSTR(sd.createDate,1,10) 'xField',COUNT(DISTINCT (sd.fansId)) 'yField' 
+		  	from fz_ad_channel fz
+			LEFT JOIN sd_channel_index_log sd on  fz.channel_id =sd.channelId
+			where  fz.channel_type = 0 and  fz.id= #{id,jdbcType=BIGINT}  	and SUBSTR(sd.createDate,1,10)  BETWEEN fz.start_date and fz.end_date
+				and sd.logType = '浏览' GROUP BY fz.channel_id,SUBSTR(sd.createDate,1,10) 		
+		union all
+		SELECT '跳转' as 'seriesField', SUBSTR(sl.createDate,1,10) as 'xField',COUNT(DISTINCT (sl.fansId)) 'yField' 
+			from  fz_ad_channel fz
+			LEFT JOIN sd_goods sd on fz.brand_id = sd.brandId
+			LEFT JOIN sd_fans_log sl on sd.id = sl.goodsId and fz.channel_id = sl.channelId
+			where  fz.id= #{id,jdbcType=BIGINT}  and SUBSTR(sl.createDate,1,10)  BETWEEN fz.start_date and fz.end_date and sl.logType = '跳转'
+		GROUP BY fz.channel_id,SUBSTR(sl.createDate,1,10) 
+    </select>
+        
+	<select id="queryBrandChannelJump" resultMap="baseResultMap" parameterType="com.sdm.auth.model.bio.AnalysisAdStatisticsBIO" flushCache="true" >
+    	SELECT SUBSTR(sl.createDate,1,10) statistics_date,sd.brandId brand_id,sb.xxmc,sl.channelId  channel_id,COUNT(DISTINCT sl.fansId) jump_UV  
+			from sd_goods sd 
+			LEFT JOIN sd_brand sb on sd.brandId = sb.id
+			LEFT JOIN sd_fans_log sl on sl.goodsId = sd.id
+ 			where 	sl.logType = '跳转'
+ 				<if test="statisticsDateStart != null and statisticsDateStart !=''   and statisticsDateEnd != null and statisticsDateEnd != ''" >
+		     			 and SUBSTR(sl.createDate,1,10)   BETWEEN #{statisticsDateStart,jdbcType=VARCHAR} and  #{statisticsDateEnd,jdbcType=VARCHAR}
+		      	</if>
+		      	<if test="xxmc != null and xxmc != ''" >
+						and sb.xxmc  like "%" #{xxmc,jdbcType=VARCHAR}"%" 
+	       		</if>
+				GROUP BY SUBSTR(sl.createDate,1,10),sd.brandId,sl.channelId
+			ORDER BY SUBSTR(sl.createDate,1,10) desc,COUNT(DISTINCT sl.fansId) desc
+  	</select>
+</mapper>

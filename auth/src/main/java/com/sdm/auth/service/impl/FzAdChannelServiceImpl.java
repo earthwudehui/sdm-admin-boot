@@ -58,4 +58,10 @@ public class FzAdChannelServiceImpl implements FzAdChannelService {
         return modelMapper.map(fzAdChannel, FzAdChannelDTO.class);
     }
 
+    @Override
+    public boolean deleteFzAdChannelById(Long id) {
+        int i = fzAdChannelDao.delete(id);
+        return i > 0;
+    }
+
 }
